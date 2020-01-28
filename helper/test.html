@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>翻扑克</title>
+<link rel="stylesheet" href="animate.css" type="text/css" />
+<script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+<style type="text/css">
+.box {
+    width: 355px;
+    height: 500px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin-left: 10px;
+    position: relative;
+}
+.list {
+    position: absolute;
+}
+li {
+    float:left;
+    list-style:none;
+}
+</style>
+<script>
+$(function(){
+// 上一个扑克  扑克正面  扑克背面
+var old;
+var pBack = "http://p_w_picpath.zhangxinxu.com/p_w_picpath/blog/201210/puke-back.png";
+var pFront = "http://p_w_picpath.zhangxinxu.com/p_w_picpath/blog/201210/puke-k.png";
+    $(".box").bind("click", function() {
+                              
+        if(old == null){
+            old =  this;
+        }else if(old != null  && old != this){
+            mRotate($(old));
+            old = this;
+        }else{
+            old = null;
+        }
+        var self = $(this);
+        mRotate(self);
+                              
+});
+function mRotate(self){
+        self.find(".list").addClass("out").removeClass("in");
+        setTimeout(function() {
+            if(self.find(".list").find("img").attr("src") == pBack ){
+                self.find(".list").find("img").attr("src",pFront);
+            }else{
+                self.find(".list").find("img").attr("src",pBack);
+                }
+            self.find(".list").addClass("in").removeClass("out");
+        }, 225);
+    }
+    return;
+                          
+})
+</script>
+</head>
+<body>
+<ul>
+<li>
+<div class="box viewport-flip" title="点击翻面">
+    <a href="#" class="list flip"><img src="http://p_w_picpath.zhangxinxu.com/p_w_picpath/blog/201210/puke-back.png" alt="纸牌背面" /></a>
+</div>
+</li>
+<li>
+<div class="box viewport-flip" title="点击翻面">
+    <a href="#" class="list flip"><img src="http://p_w_picpath.zhangxinxu.com/p_w_picpath/blog/201210/puke-back.png" alt="纸牌背面" /></a>
+</div>
+</li>
+<li>
+<div class="box viewport-flip" title="点击翻面">
+    <a href="#" class="list flip"><img src="http://p_w_picpath.zhangxinxu.com/p_w_picpath/blog/201210/puke-back.png" alt="纸牌背面" /></a>
+</div>
+</li>
+<li>
+<div class="box viewport-flip" title="点击翻面">
+    <a href="#" class="list flip"><img src="http://p_w_picpath.zhangxinxu.com/p_w_picpath/blog/201210/puke-back.png" alt="纸牌背面" /></a>
+</div>
+</li>
+<li>
+<div class="box viewport-flip" title="点击翻面">
+    <a href="#" class="list flip"><img src="http://p_w_picpath.zhangxinxu.com/p_w_picpath/blog/201210/puke-back.png" alt="纸牌背面" /></a>
+</div>
+</li>
+</ul>
+</body>
+</html>

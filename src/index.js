@@ -1,9 +1,10 @@
-const hello = 'Hello world!';
+import {initRender} from './render';
+import $ from 'easy-dom-util';
 
+$.initStylePool();
 
-let main = () => {
-    console.log(hello);
-    alert(hello);
+function main () {
+    initRender();
 };
 
 main();
