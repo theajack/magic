@@ -113,14 +113,6 @@ async function result (cardData) {
     let resultDiv = $.create('div').cls('result-div hide');
     el.resultDiv = resultDiv;
     let card = $.create('div').cls('card'), number;
-    card.append(
-        $.create('img').cls('type').src(image.type(cardData.type)),
-        number = $.create('div').cls('number').text(cardData.letter)
-    );
-    card.style('opacity', '0');
-    if (cardData.type === 1 || cardData.type === 3) {
-        number.style('color', 'rgb(221,1,3)');
-    }
     let wrap = null;
     resultDiv.append(
         wrap = $.create('div').cls('flip_wrap').append(
@@ -136,7 +128,13 @@ async function result (cardData) {
     );
     el.wrap = wrap;
     wrap.click(() => {
-        card.style('opacity', '1');
+        card.append(
+            $.create('img').cls('type').src(image.type(cardData.type)),
+            number = $.create('div').cls('number').text(cardData.letter)
+        );
+        if (cardData.type === 1 || cardData.type === 3) {
+            number.style('color', 'rgb(221,1,3)');
+        }
         wrap.addClass('rotate');
 
         el.btn.text('分享给朋友装X');
