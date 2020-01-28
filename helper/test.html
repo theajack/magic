@@ -1,90 +1,91 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-<meta charset="utf-8">
-<title>翻扑克</title>
-<link rel="stylesheet" href="animate.css" type="text/css" />
-<script type="text/javascript" src="jquery-1.8.3.min.js"></script>
-<style type="text/css">
-.box {
-    width: 355px;
-    height: 500px;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    margin-left: 10px;
-    position: relative;
-}
-.list {
-    position: absolute;
-}
-li {
-    float:left;
-    list-style:none;
-}
-</style>
-<script>
-$(function(){
-// 上一个扑克  扑克正面  扑克背面
-var old;
-var pBack = "http://p_w_picpath.zhangxinxu.com/p_w_picpath/blog/201210/puke-back.png";
-var pFront = "http://p_w_picpath.zhangxinxu.com/p_w_picpath/blog/201210/puke-k.png";
-    $(".box").bind("click", function() {
-                              
-        if(old == null){
-            old =  this;
-        }else if(old != null  && old != this){
-            mRotate($(old));
-            old = this;
-        }else{
-            old = null;
-        }
-        var self = $(this);
-        mRotate(self);
-                              
-});
-function mRotate(self){
-        self.find(".list").addClass("out").removeClass("in");
-        setTimeout(function() {
-            if(self.find(".list").find("img").attr("src") == pBack ){
-                self.find(".list").find("img").attr("src",pFront);
-            }else{
-                self.find(".list").find("img").attr("src",pBack);
-                }
-            self.find(".list").addClass("in").removeClass("out");
-        }, 225);
-    }
-    return;
-                          
-})
-</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
 </head>
+<style>
+  .flip_wrap {
+    width: 210px;
+    height: 220px;
+    margin: 0 auto;
+    perspective: 800px;
+    /*perspective属性定义3D元素距视图的距离,以像素计。该属性允许您改变 3D
+  元素查看 3D 元素的视图。*/
+    -webkit-perspective: 800px;
+    -moz-perspective: 800px;
+    -ms-perspective: 800px;
+    -o-perspective: 800px;
+  }
+
+  .flip {
+    width: 210px;
+    height: 220px;
+    backface-visibility: hidden;
+    /*背对屏幕时隐藏*/
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    transition: all 2s ease;
+    /*为翻牌添加过渡效果*/
+    -webkit-transition: all 2s ease;
+    -moz-transition: all 2s ease;
+    -ms-transition: all 2s ease;
+    -o-transition: all 2s ease;
+    transform-style: preserve-3d;
+    /*子元素将保留其 3D 位置。*/
+  }
+
+  .side {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    /*让背面和正面重叠*/
+    left: 50%;
+    margin-left: -105px;
+  }
+
+  .front {
+    z-index: 2;
+    /*让正面朝上*/
+  }
+
+  .back {
+    transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    -ms-transform: rotateY(180deg);
+    -o-transform: rotateY(180deg);
+  }
+
+  .flip_wrap:hover .flip {
+    transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    -ms-transform: rotateY(180deg);
+    -o-transform: rotateY(180deg);
+  }
+</style>
+
 <body>
-<ul>
-<li>
-<div class="box viewport-flip" title="点击翻面">
-    <a href="#" class="list flip"><img src="http://p_w_picpath.zhangxinxu.com/p_w_picpath/blog/201210/puke-back.png" alt="纸牌背面" /></a>
-</div>
-</li>
-<li>
-<div class="box viewport-flip" title="点击翻面">
-    <a href="#" class="list flip"><img src="http://p_w_picpath.zhangxinxu.com/p_w_picpath/blog/201210/puke-back.png" alt="纸牌背面" /></a>
-</div>
-</li>
-<li>
-<div class="box viewport-flip" title="点击翻面">
-    <a href="#" class="list flip"><img src="http://p_w_picpath.zhangxinxu.com/p_w_picpath/blog/201210/puke-back.png" alt="纸牌背面" /></a>
-</div>
-</li>
-<li>
-<div class="box viewport-flip" title="点击翻面">
-    <a href="#" class="list flip"><img src="http://p_w_picpath.zhangxinxu.com/p_w_picpath/blog/201210/puke-back.png" alt="纸牌背面" /></a>
-</div>
-</li>
-<li>
-<div class="box viewport-flip" title="点击翻面">
-    <a href="#" class="list flip"><img src="http://p_w_picpath.zhangxinxu.com/p_w_picpath/blog/201210/puke-back.png" alt="纸牌背面" /></a>
-</div>
-</li>
-</ul>
+  <div class="flip_wrap">
+    <!-- 大容器 -->
+    <div class="flip">
+      <!--实现翻牌容器 -->
+      <div class="side front">
+        <!--牌正面 -->
+        <img src="http://wap.cmread.com/rbc/t/content/repository/ues/image/s109/fpbg2.png">
+      </div>
+      <div class="side back">
+        <!-- 牌背面 -->
+        <img src="http://wap.cmread.com/rbc/t/content/repository/ues/image/s109/fpbg.png">
+      </div>
+    </div>
+  </div>
 </body>
+
 </html>
