@@ -1,6 +1,6 @@
 function src (name) {
-    // return 'https://www.theajack.com/magic/cdn/image/' + name;
-    return 'http://localhost:8080/image/' + name;
+    return 'https://www.theajack.com/magic/cdn/image/' + name;
+    // return 'http://localhost:8080/image/' + name;
 }
 
 export default {

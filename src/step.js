@@ -117,6 +117,7 @@ async function result (cardData) {
         $.create('img').cls('type').src(image.type(cardData.type)),
         number = $.create('div').cls('number').text(cardData.letter)
     );
+    card.style('opacity', '0');
     if (cardData.type === 1 || cardData.type === 3) {
         number.style('color', 'rgb(221,1,3)');
     }
@@ -135,6 +136,7 @@ async function result (cardData) {
     );
     el.wrap = wrap;
     wrap.click(() => {
+        card.style('opacity', '1');
         wrap.addClass('rotate');
 
         el.btn.text('分享给朋友装X');
