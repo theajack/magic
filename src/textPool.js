@@ -22,7 +22,7 @@ export default {
         await delay(100);
 
         text.addClass('height');
-        await delay(500);
+        await delay(200);
         this.arr.push(text);
         this.index++;
         return text;

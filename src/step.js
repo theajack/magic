@@ -2,7 +2,7 @@ import $ from 'easy-dom-util';
 import image from './image';
 import generateCards from './cards';
 import textPool from './textPool';
-import {reportStyle, transition, transform} from './tool';
+import {reportStyle, transition, transform, isIos} from './tool';
 import {type, delay, hide, show, btnClick} from './tool';
 
 reportStyle(initStyle);
@@ -112,12 +112,12 @@ async function result (cardData) {
 
     let resultDiv = $.create('div').cls('result-div hide');
     el.resultDiv = resultDiv;
-    let card = $.create('div').cls('card'), number;
+    let card = $.create('div').cls('card'), number, front;
     let wrap = null;
     resultDiv.append(
         wrap = $.create('div').cls('flip_wrap').append(
             $.create('div').cls('flip').append(
-                $.create('div').cls('side front').append( // 扑克背面
+                front = $.create('div').cls('side front').append( // 扑克背面
                     $.create('img').cls('card-back').src(image.back)
                 ),
                 $.create('div').cls('side back').append( // 扑克背面
@@ -135,7 +135,11 @@ async function result (cardData) {
         if (cardData.type === 1 || cardData.type === 3) {
             number.style('color', 'rgb(221,1,3)');
         }
-        wrap.addClass('rotate');
+        if (isIos()) {
+            front.addClass('fadeout');
+        } else {
+            wrap.addClass('rotate');
+        }
 
         el.btn.text('分享给朋友装X');
     
@@ -232,9 +236,6 @@ function initStyle () {
             max-height: 100%;
             overflow-y: auto;
         }
-        .result-div{
-
-        }
         .flip_wrap {
           width: 210px;
           height: 0px;
@@ -276,11 +277,16 @@ function initStyle () {
       
         .front {
           z-index: 2;
+          opacity: 1;
+          ${transition('opacity 2s ease')}
           /*让正面朝上*/
+        }
+        .front.fadeout{
+            opacity: 0;
         }
       
         .back {
-          ${transform('rotateY(180deg)')}
+          ${isIos() ? '' : transform('rotateY(180deg)')}
           background: #fff;
         }
       

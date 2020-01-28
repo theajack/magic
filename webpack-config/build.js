@@ -21,9 +21,9 @@ let name = ((name) => {
 })(pkg.name);
 
 let libraryName = config.libraryName || name;
-let cdnFileName = config.cdnFileName || name;
+// let cdnFileName = config.cdnFileName || name;
 
-let version = config.version;
+// let version = config.version;
 
 let index = 'src/index.js';
 
@@ -34,7 +34,8 @@ module.exports = (env) => {
         entry: path.resolve('./', index),
         output: {
             path: path.resolve('./', npm ? 'npm' : 'cdn'),
-            filename: npm ? 'index.js' : (cdnFileName + '.' + version + '.min.js'),
+            // filename: npm ? 'index.js' : (cdnFileName + '.' + version + '.min.js'),
+            filename: 'index.js',
             library: libraryName,
             libraryTarget: 'umd',
             libraryExport: 'default',

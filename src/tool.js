@@ -68,3 +68,8 @@ export async function btnClick (btn) {
 export function random (a, b) {
     return (a + Math.round(Math.random() * (b - a)));
 };
+
+export function isIos () {
+    var ua = navigator.userAgent.toLowerCase();
+    return (/iphone|ipad|ipod/.test(ua));
+}
