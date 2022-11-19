@@ -46,7 +46,7 @@
         "lint-staged": "^9.4.2",
         "tacl-ui": "0.0.24",
         "webpack": "^4.41.2",
-        "webpack-cli": "^3.3.9",
+        "webpack-cli": "^3.3.12",
         "webpack-dev-server": "^3.8.2"
     },
     "dependencies": {},
