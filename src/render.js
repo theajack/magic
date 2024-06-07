@@ -1,3 +1,8 @@
+/*
+ * @Author: chenzhongsheng
+ * @Date: 2024-05-24 15:23:02
+ * @Description: Coding something
+ */
 import $ from 'easy-dom-util';
 import {reportStyle} from './tool';
 import step from './step';
@@ -10,7 +15,9 @@ export async function initRender () {
     container = $.create('div').cls('container');
     $.query('body').append(container);
     await step.init(container);
-    await step.first();
+    if (!(await step.first())) {
+        return;
+    }
     let card = await step.card();
     await step.result(card);
     await step.share();

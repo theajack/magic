@@ -97,8 +97,9 @@ function initStyle () {
         .card .index{
             position: absolute;
             font-size: 12px;
+            font-weight: bold;
             top: 0;
-            left: -14px;
+            left: -17px;
             color: #fff;
         }
         .card .type{

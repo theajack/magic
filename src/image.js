@@ -1,6 +1,13 @@
+/*
+ * @Author: chenzhongsheng
+ * @Date: 2024-05-24 15:23:02
+ * @Description: Coding something
+ */
 function src (name) {
-    return 'https://www.theajack.com/magic/cdn/image/' + name;
-    // return 'http://localhost:8080/image/' + name;
+    if (location.host.startsWith('localhost:')) {
+        return 'http://localhost:8080/image/' + name;
+    }
+    return '/magic/cdn/image/' + name;
 }
 
 export default {

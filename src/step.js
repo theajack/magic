@@ -5,6 +5,22 @@ import textPool from './textPool';
 import {reportStyle, transition, transform, isIos} from './tool';
 import {type, delay, hide, show, btnClick} from './tool';
 
+const Storage = (() => {
+    const Key = '__magic_index';
+    const get = () => {
+        return parseInt(localStorage.getItem(Key) || '0');
+    };
+    return {
+        add () {
+            const v = get() + 1;
+            localStorage.setItem(Key, v);
+        },
+        check () {
+            return (get() < 2);
+        }
+    };
+})();
+
 reportStyle(initStyle);
 
 let el = {};
@@ -23,7 +39,14 @@ async function first () {
     
     await delay(100);
     await show(el.face);
-    await type(await textPool.pop(), '嘿，你好！咱们玩个游戏吧!');
+
+    if (!Storage.check()) {
+        await type(await textPool.pop(), '我们已经玩过两次啦');
+        await type(await textPool.pop(), '我的魔术不会表演第三次的~');
+        return false;
+    }
+
+    await type(await textPool.pop(), '嘿，你好！咱们玩个游戏吧~');
 
     show(el.btn);
 
@@ -34,7 +57,7 @@ async function first () {
     await type(await textPool.pop(), '非常感谢你的参与');
 
 
-    await type(await textPool.pop(), '首先请在脑海中想一个两位数');
+    await type(await textPool.pop(), '首先请在脑海中想一个两位数并记住');
     el.btn.text('想好了');
 
     show(el.btn);
@@ -45,10 +68,10 @@ async function first () {
 
     await type(await textPool.pop(), '然后把这个两位数减去');
     await type(await textPool.pop(), '它的十位数和个位数之和');
-    await type(await textPool.pop(), '例: 如果你想的是 12');
-    await type(await textPool.pop(), '结果就是 12 - (1 + 2)');
+    await type(await textPool.pop(), '举个例子: 如果你想的是 12');
+    await type(await textPool.pop(), '那么结果就是 12 - (1 + 2) = 9');
     await type(await textPool.pop(), '请按照这个算式计算出你的结果');
-    await type(await textPool.pop(), '并记住最终的结果');
+    await type(await textPool.pop(), '并记住计算得出的数');
 
     el.btn.text('算好了');
     show(el.btn);
@@ -60,9 +83,10 @@ async function first () {
     await delay(100);
     await textPool.clear();
 
-    await type(await textPool.pop(), '接下来我会为你准备一些扑克牌');
-    await type(await textPool.pop(), '你需要找到你的');
-    await type(await textPool.pop(), '最终结果对应的扑克牌并记住它');
+    await type(await textPool.pop(), '接下来我会为你准备一些');
+    await type(await textPool.pop(), '带有数字序号的杂乱的扑克牌');
+    await type(await textPool.pop(), '你需要找到你的计算结果数字');
+    await type(await textPool.pop(), '对应的扑克牌并记住它');
 
     el.btn.text('明白 给我看牌吧');
 
@@ -72,6 +96,7 @@ async function first () {
     textPool.reset();
     hide(el.btn);
     await hide(el.face);
+    return true;
 }
 
 async function card () {
@@ -141,7 +166,9 @@ async function result (cardData) {
             wrap.addClass('rotate');
         }
 
-        el.btn.text('分享给朋友装X');
+        const text = ['黑桃', '红桃', '梅花', '方块'][cardData.type];
+
+        el.btn.text(`你怎么知道是 ${text}${cardData.letter} ?`);
     
         show(el.btn);
 
@@ -150,10 +177,10 @@ async function result (cardData) {
     await delay(500);
     wrap.style('height', '315px');
     await show(resultDiv);
-    await type(await textPool.pop(), '点击扑克看我猜的对不对吧');
+    await type(await textPool.pop(), '点击扑克牌看我猜的对不对吧');
     await btnClick(el.btn);
 
-
+    Storage.add();
 }
 
 export async function share () {
@@ -164,8 +191,8 @@ export async function share () {
     el.container.remove(el.resultDiv);
     textPool.reset();
     await delay(100);
+    await type(await textPool.pop(), 'This is Magic');
     await type(await textPool.pop(), '非常感谢你的参与');
-    await type(await textPool.pop(), '点击右上角 ... 分享到朋友圈');
     await delay(1500);
 
     textPool.reset();
@@ -177,6 +204,7 @@ export async function share () {
 }
 
 export default {
+    Storage,
     init,
     first,
     card,
@@ -186,6 +214,9 @@ export default {
 
 function initStyle () {
     return /* css */ `
+        body *{
+            font-family:Inter,system-ui,Avenir,Helvetica,Arial,sans-serif;
+        }
         .face{
             width: 200px;
             margin-bottom: 20px;
@@ -218,6 +249,7 @@ function initStyle () {
             margin-top: 30px;
             padding: 5px 30px;
             outline: none;
+            cursor: pointer;
         }
         .button.card{
             margin: 0;
@@ -230,8 +262,9 @@ function initStyle () {
         .card-list{
             position: fixed;
             top: 0;
-            left: 0;
-            width: 100%;
+            max-width: 450px;
+            left: 50%;
+            transform: translate(-50%);
             height: 616px;
             max-height: 100%;
             overflow-y: auto;
@@ -295,6 +328,7 @@ function initStyle () {
         }
         .card-back{
             width: 100%;
+            cursor: pointer;
         }
         .result-div .card{
             width: 100%;
